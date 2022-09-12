@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import localforage from 'localforage';
 import { createStore } from 'polotno/model/store';
 
 import './index.css';
