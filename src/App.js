@@ -64,7 +64,7 @@ const App = ({ store }) => {
       onDrop={handleDrop}
     >
       <Topbar store={store} />
-      <div style={{ height: 'calc(100% - 50px)' }}>
+      <div style={{ height: 'calc(100% - 32px)' }}>
         <PolotnoContainer className="polotno-app-container">
           <SidePanelWrap>
             <SidePanel store={store} sections={DEFAULT_SECTIONS} />
