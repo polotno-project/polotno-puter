@@ -10,6 +10,8 @@ import {
   Classes,
   Position,
   Menu,
+  MenuItem,
+  MenuDivider,
   HTMLSelect,
   Slider,
 } from '@blueprintjs/core';
@@ -21,6 +23,8 @@ import { downloadFile } from 'polotno/utils/download';
 import { Popover2 } from '@blueprintjs/popover2';
 import * as unit from 'polotno/utils/unit';
 import { t } from 'polotno/utils/l10n';
+import FaFileExport from '@meronex/icons/fa/FaFileExport';
+import FaFileImport from '@meronex/icons/fa/FaFileImport';
 // import { Cloud } from './cloud';
 
 import styled from 'polotno/utils/styled';
@@ -30,6 +34,14 @@ const NavbarContainer = styled('div')`
     overflow-x: auto;
     overflow-y: hidden;
     max-width: 100vw;
+  }
+  &.bp4-navbar,
+  & .bp4-navbar-group {
+    height: 32px;
+    background-color: #fbf9f9;
+  }
+  & .bp4-button {
+    padding: 2px 10px;
   }
 `;
 
@@ -59,17 +71,6 @@ function blobToDataURL(blob, callback) {
   };
   a.readAsDataURL(blob);
 }
-
-// if (url_params.has('puter.item.read_url')) {
-//   // send GET request to puter.item.read_url to get file content
-//   fetch(url_params.get('puter.item.read_url'))
-//     .then((response) => {
-//       return response.blob();
-//     })
-//     .then(async (blob) => {
-
-//     });
-// }
 
 // const DownloadButton = observer(({ store }) => {
 //   const [saving, setSaving] = React.useState(false);
@@ -267,60 +268,104 @@ export default observer(({ store }) => {
     <NavbarContainer className="bp4-navbar">
       <NavInner>
         <Navbar.Group align={Alignment.LEFT}>
-          {/* <Button
-            icon="new-object"
-            minimal
-            onClick={() => {
-              const ids = store.pages
-                .map((page) => page.children.map((child) => child.id))
-                .flat();
-              const hasObjects = ids?.length;
-              if (hasObjects) {
-                if (!window.confirm('Remove all content for a new design?')) {
-                  return;
-                }
-              }
-              const pagesIds = store.pages.map((p) => p.id);
-              store.deletePages(pagesIds);
-              store.addPage();
-            }}
-          >
-            New
-          </Button> */}
-          <Button
-            icon="folder-open"
-            minimal
-            onClick={async () => {
-              // Display the 'Open File Picker' allowing the user to select and open a file from their Puter account
-              openFile.current = await cloud.showOpenFilePicker();
-              addImage(openFile.current);
-              // Load the content of the opened file into the editor
-              // editor.value = await open_file.text();
-            }}
-          >
-            Open
-          </Button>
+          <Popover2
+            content={
+              <Menu>
+                {/* <MenuDivider title={t('toolbar.layering')} /> */}
+                <MenuItem
+                  icon="document"
+                  text="New"
+                  onClick={() => {
+                    const ids = store.pages
+                      .map((page) => page.children.map((child) => child.id))
+                      .flat();
+                    const hasObjects = ids?.length;
+                    if (hasObjects) {
+                      if (
+                        !window.confirm('Remove all content for a new design?')
+                      ) {
+                        return;
+                      }
+                    }
+                    const pagesIds = store.pages.map((p) => p.id);
+                    store.deletePages(pagesIds);
+                    store.addPage();
+                    openFile.current = null;
+                  }}
+                />
 
-          <Button
-            icon="floppy-disk"
+                <MenuDivider />
+                <MenuItem
+                  icon="folder-open"
+                  text="Open"
+                  onClick={async () => {
+                    openFile.current = await cloud.showOpenFilePicker();
+                    if (openFile.current.name.indexOf('.json') >= 0) {
+                      const file = openFile.current;
+                      const text = await file.text();
+                      store.loadJSON(JSON.parse(text));
+                    } else {
+                      addImage(openFile.current);
+                    }
+                  }}
+                />
+                <MenuItem
+                  icon="floppy-disk"
+                  text="Save"
+                  onClick={async () => {
+                    // const dataURL = await store.toDataURL();
+                    // const blob = dataURLtoBlob(dataURL);
+                    const data = JSON.stringify(store.toJSON());
+                    // If there is a file already open, overwrite it with the content of editor
+                    if (openFile.current) {
+                      openFile.current.write(data);
+                    } else {
+                      openFile.current = await cloud.showSaveFilePicker(
+                        data,
+                        'polotno.json'
+                      );
+                    }
+                  }}
+                />
+                <MenuItem
+                  icon={<FaFileImport />}
+                  text="Save as"
+                  onClick={async () => {
+                    // const dataURL = await store.toDataURL();
+                    // const blob = dataURLtoBlob(dataURL);
+                    const data = JSON.stringify(store.toJSON());
+                    // If there is a file already open, overwrite it with the content of editor
+                    openFile.current = await cloud.showSaveFilePicker(
+                      data,
+                      'polotno.json'
+                    );
+                  }}
+                />
+                <MenuItem
+                  icon="import"
+                  text="Export to image"
+                  onClick={async () => {
+                    const dataURL = await store.toDataURL();
+                    const blob = dataURLtoBlob(dataURL);
+                    await cloud.showSaveFilePicker(blob, 'polotno.png');
+                  }}
+                />
+                <MenuDivider />
+                <MenuItem
+                  text="About"
+                  icon="info-sign"
+                  onClick={() => {
+                    toggleFaq(true);
+                  }}
+                />
+              </Menu>
+            }
+            position={Position.BOTTOM_RIGHT}
             minimal
-            onClick={async () => {
-              const dataURL = await store.toDataURL();
-              const blob = dataURLtoBlob(dataURL);
-              // If there is a file already open, overwrite it with the content of editor
-              if (openFile.current) {
-                openFile.current.write(blob);
-              } else {
-                openFile.current = await cloud.showSaveFilePicker(
-                  blob,
-                  'polotno.png'
-                );
-              }
-            }}
           >
-            Save
-          </Button>
-          <Button
+            <Button minimal text="File" />
+          </Popover2>
+          {/* <Button
             icon="floppy-disk"
             minimal
             onClick={async () => {
@@ -333,7 +378,7 @@ export default observer(({ store }) => {
             }}
           >
             Save As
-          </Button>
+          </Button> */}
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
           {/* <a
@@ -384,9 +429,9 @@ export default observer(({ store }) => {
           >
             Join Chat
           </AnchorButton>
-          <Button icon="info-sign" minimal onClick={() => toggleFaq(true)}>
+          {/* <Button icon="info-sign" minimal onClick={() => toggleFaq(true)}>
             About
-          </Button>
+          </Button> */}
 
           <Divider />
           {/* <DownloadButton store={store} /> */}

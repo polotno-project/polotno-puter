@@ -10,7 +10,7 @@ import { QrSection } from './qr-section';
 import { QuotesSection } from './quotes-section';
 import { IconsSection } from './icons-section';
 import { ShapesSection } from './shapes-section';
-import { StableDiffusionSection } from './stable-diffusion-section';
+// import { StableDiffusionSection } from './stable-diffusion-section';
 
 import Topbar from './topbar';
 
@@ -23,7 +23,7 @@ DEFAULT_SECTIONS.splice(3, 0, IconsSection);
 // add two more sections
 DEFAULT_SECTIONS.push(QuotesSection, QrSection);
 
-DEFAULT_SECTIONS.push(StableDiffusionSection);
+// DEFAULT_SECTIONS.push(StableDiffusionSection);
 
 const useHeight = () => {
   const [height, setHeight] = React.useState(window.innerHeight);
