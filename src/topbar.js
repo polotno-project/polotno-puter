@@ -324,7 +324,13 @@ export default observer(({ store }) => {
                     const data = JSON.stringify(store.toJSON());
                     // If there is a file already open, overwrite it with the content of editor
                     if (openFile.current) {
-                      openFile.current.write(data);
+                      if (openFile.current.name.indexOf('.json') >= 0) {
+                        openFile.current.write(data);
+                      } else {
+                        const dataURL = await store.toDataURL();
+                        const blob = dataURLtoBlob(dataURL);
+                        openFile.current.write(blob);
+                      }
                     } else {
                       openFile.current = await cloud.showSaveFilePicker(
                         data,
