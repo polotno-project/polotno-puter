@@ -259,7 +259,13 @@ export default observer(({ store }) => {
       // onto the Notepad.
       onItemsOpened: async function (items) {
         openFile.current = items[0];
-        addImage(items[0]);
+        if (openFile.current.name.indexOf('.json') >= 0) {
+          const file = openFile.current;
+          const text = await file.text();
+          store.loadJSON(JSON.parse(text));
+        } else {
+          addImage(openFile.current);
+        }
       },
     });
   }, []);
