@@ -6,13 +6,17 @@ import { SidePanel, DEFAULT_SECTIONS } from 'polotno/side-panel';
 import { Workspace } from 'polotno/canvas/workspace';
 
 import { loadFile } from './file';
-import { QrSection } from './qr-section';
-import { QuotesSection } from './quotes-section';
-import { IconsSection } from './icons-section';
-import { ShapesSection } from './shapes-section';
-// import { StableDiffusionSection } from './stable-diffusion-section';
+import { QrSection } from './sections/qr-section';
+// import { ThenounprojectSection } from './thenounproject-section';
+import { QuotesSection } from './sections/quotes-section';
+import { IconsSection } from './sections/icons-section';
+import { ShapesSection } from './sections/shapes-section';
+import { StableDiffusionSection } from './sections/stable-diffusion-section';
+// import { MyDesignsSection } from './sections/my-designs-section';
 
-import Topbar from './topbar';
+import { ImageRemoveBackground } from './background-remover';
+
+import Topbar from './topbar/topbar';
 
 // DEFAULT_SECTIONS.splice(3, 0, IllustrationsSection);
 // replace elements section with just shapes
@@ -22,8 +26,9 @@ DEFAULT_SECTIONS.splice(3, 1, ShapesSection);
 DEFAULT_SECTIONS.splice(3, 0, IconsSection);
 // add two more sections
 DEFAULT_SECTIONS.push(QuotesSection, QrSection);
+// DEFAULT_SECTIONS.unshift(MyDesignsSection);
 
-// DEFAULT_SECTIONS.push(StableDiffusionSection);
+DEFAULT_SECTIONS.push(StableDiffusionSection);
 
 const useHeight = () => {
   const [height, setHeight] = React.useState(window.innerHeight);
@@ -36,6 +41,8 @@ const useHeight = () => {
 };
 
 const App = ({ store }) => {
+  const height = useHeight();
+
   const handleDrop = (ev) => {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
@@ -50,8 +57,6 @@ const App = ({ store }) => {
       loadFile(ev.dataTransfer.files[i], store);
     }
   };
-
-  const height = useHeight();
 
   return (
     <div
@@ -70,7 +75,12 @@ const App = ({ store }) => {
             <SidePanel store={store} sections={DEFAULT_SECTIONS} />
           </SidePanelWrap>
           <WorkspaceWrap>
-            <Toolbar store={store} />
+            <Toolbar
+              store={store}
+              components={{
+                ImageRemoveBackground,
+              }}
+            />
             <Workspace store={store} />
             <ZoomButtons store={store} />
           </WorkspaceWrap>
