@@ -1,4 +1,4 @@
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import { dataURLtoBlob } from './blob';
 
 export async function listDesigns() {
