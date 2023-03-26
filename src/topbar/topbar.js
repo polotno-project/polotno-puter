@@ -12,22 +12,15 @@ import {
   Menu,
   MenuItem,
   MenuDivider,
-  HTMLSelect,
-  Slider,
 } from '@blueprintjs/core';
 import FaGithub from '@meronex/icons/fa/FaGithub';
 import FaDiscord from '@meronex/icons/fa/FaDiscord';
 import BiCodeBlock from '@meronex/icons/bi/BiCodeBlock';
 import { getImageSize } from 'polotno/utils/image';
-import { downloadFile } from 'polotno/utils/download';
 import { Popover2 } from '@blueprintjs/popover2';
-import * as unit from 'polotno/utils/unit';
-import { t } from 'polotno/utils/l10n';
-import FaFileExport from '@meronex/icons/fa/FaFileExport';
 import FaFileImport from '@meronex/icons/fa/FaFileImport';
 import { DownloadButton } from './download-button';
 import { dataURLtoBlob, blobToDataURL } from '../blob';
-// import { Cloud } from './cloud';
 
 import styled from 'polotno/utils/styled';
 
@@ -53,161 +46,7 @@ const NavInner = styled('div')`
   }
 `;
 
-// const DownloadButton = observer(({ store }) => {
-//   const [saving, setSaving] = React.useState(false);
-//   const [quality, setQuality] = React.useState(1);
-//   const [type, setType] = React.useState('png');
-
-//   const getName = () => {
-//     const texts = [];
-//     store.pages.forEach((p) => {
-//       p.children.forEach((c) => {
-//         if (c.type === 'text') {
-//           texts.push(c.text);
-//         }
-//       });
-//     });
-//     const allWords = texts.join(' ').split(' ');
-//     const words = allWords.slice(0, 6);
-//     return words.join(' ').replace(/\s/g, '-').toLowerCase() || 'polotno';
-//   };
-//   return (
-//     <Popover2
-//       content={
-//         <Menu>
-//           <li class="bp4-menu-header">
-//             <h6 class="bp4-heading">File type</h6>
-//           </li>
-//           <HTMLSelect
-//             fill
-//             onChange={(e) => {
-//               setType(e.target.value);
-//               setQuality(1);
-//             }}
-//             value={type}
-//           >
-//             <option value="jpeg">JPEG</option>
-//             <option value="png">PNG</option>
-//             <option value="pdf">PDF</option>
-//           </HTMLSelect>
-//           <li class="bp4-menu-header">
-//             <h6 class="bp4-heading">Size</h6>
-//           </li>
-//           <div style={{ padding: '10px' }}>
-//             <Slider
-//               value={quality}
-//               labelRenderer={false}
-//               // labelStepSize={0.4}
-//               onChange={(quality) => {
-//                 setQuality(quality);
-//               }}
-//               stepSize={0.2}
-//               min={0.2}
-//               max={3}
-//               showTrackFill={false}
-//             />
-//             {type === 'pdf' && (
-//               <div>
-//                 {unit.pxToUnitRounded({
-//                   px: store.width,
-//                   dpi: store.dpi / quality,
-//                   precious: 0,
-//                   unit: 'mm',
-//                 })}{' '}
-//                 x{' '}
-//                 {unit.pxToUnitRounded({
-//                   px: store.height,
-//                   dpi: store.dpi / quality,
-//                   precious: 0,
-//                   unit: 'mm',
-//                 })}{' '}
-//                 mm
-//               </div>
-//             )}
-//             {type !== 'pdf' && (
-//               <div>
-//                 {Math.round(store.width * quality)} x{' '}
-//                 {Math.round(store.height * quality)} px
-//               </div>
-//             )}
-//           </div>
-//           <Button
-//             fill
-//             intent="primary"
-//             loading={saving}
-//             onClick={async () => {
-//               if (type === 'pdf') {
-//                 setSaving(true);
-//                 await store.saveAsPDF({
-//                   fileName: getName() + '.pdf',
-//                   dpi: store.dpi / quality,
-//                   pixelRatio: 2 * quality,
-//                 });
-//                 setSaving(false);
-//               } else {
-//                 store.pages.forEach((page, index) => {
-//                   // do not add index if we have just one page
-//                   const indexString =
-//                     store.pages.length > 1 ? '-' + (index + 1) : '';
-//                   store.saveAsImage({
-//                     pageId: page.id,
-//                     pixelRatio: quality,
-//                     mimeType: 'image/' + type,
-//                     fileName: getName() + indexString + '.' + type,
-//                   });
-//                 });
-//               }
-//             }}
-//           >
-//             Download {type.toUpperCase()}
-//           </Button>
-
-//           {/* <MenuItem
-//             icon="media"
-//             text={t('toolbar.saveAsImage')}
-//             onClick={async () => {
-//               store.pages.forEach((page, index) => {
-//                 // do not add index if we have just one page
-//                 const indexString =
-//                   store.pages.length > 1 ? '-' + (index + 1) : '';
-//                 store.saveAsImage({
-//                   pageId: page.id,
-//                   fileName: getName() + indexString + '.png',
-//                 });
-//               });
-//             }}
-//           />
-//           <MenuItem
-//             icon="document"
-//             text={t('toolbar.saveAsPDF')}
-//             onClick={async () => {
-//               setSaving(true);
-//               await store.saveAsPDF({
-//                 fileName: getName() + '.pdf',
-//               });
-//               setSaving(false);
-//             }}
-//           /> */}
-//         </Menu>
-//       }
-//       position={Position.BOTTOM_RIGHT}
-//     >
-//       <Button
-//         icon="import"
-//         text={t('toolbar.download')}
-//         intent="primary"
-//         loading={saving}
-//         onClick={() => {
-//           setQuality(1);
-//         }}
-//       />
-//     </Popover2>
-//   );
-// });
-
 export default observer(({ store }) => {
-  const inputRef = React.useRef();
-
   const [faqOpened, toggleFaq] = React.useState(false);
 
   const openFile = React.useRef(null);
@@ -226,19 +65,6 @@ export default observer(({ store }) => {
       });
     });
   };
-
-  React.useEffect(() => {
-    window.puter.onItemsOpened(async function (items) {
-      openFile.current = items[0];
-      if (openFile.current.name.indexOf('.json') >= 0) {
-        const file = openFile.current;
-        const text = await file.text();
-        store.loadJSON(JSON.parse(text));
-      } else {
-        addImage(openFile.current);
-      }
-    });
-  }, []);
 
   return (
     <NavbarContainer className="bp4-navbar">
@@ -266,7 +92,7 @@ export default observer(({ store }) => {
                     const pagesIds = store.pages.map((p) => p.id);
                     store.deletePages(pagesIds);
                     store.addPage();
-                    openFile.current = null;
+                    window.project.storeFile = null;
                   }}
                 />
 
@@ -275,37 +101,31 @@ export default observer(({ store }) => {
                   icon="folder-open"
                   text="Open"
                   onClick={async () => {
-                    openFile.current = await window.puter.showOpenFilePicker();
-                    if (openFile.current.name.indexOf('.json') >= 0) {
-                      const file = openFile.current;
-                      const text = await file.text();
-                      store.loadJSON(JSON.parse(text));
-                    } else {
-                      addImage(openFile.current);
-                    }
+                    const file = await window.puter.showOpenFilePicker();
+                    window.project.openFile(file);
                   }}
                 />
                 <MenuItem
                   icon="floppy-disk"
                   text="Save"
                   onClick={async () => {
-                    // const dataURL = await store.toDataURL();
-                    // const blob = dataURLtoBlob(dataURL);
                     const data = JSON.stringify(store.toJSON());
                     // If there is a file already open, overwrite it with the content of editor
-                    if (openFile.current) {
-                      if (openFile.current.name.indexOf('.json') >= 0) {
-                        openFile.current.write(data);
+                    const file = window.project.storeFile;
+                    if (file) {
+                      if (file.name.indexOf('.json') >= 0) {
+                        file.write(data);
                       } else {
                         const dataURL = await store.toDataURL();
                         const blob = dataURLtoBlob(dataURL);
-                        openFile.current.write(blob);
+                        file.write(blob);
                       }
                     } else {
-                      openFile.current = await window.puter.showSaveFilePicker(
-                        data,
-                        'polotno.json'
-                      );
+                      const name = 'polotno.json';
+                      window.project.storeFile =
+                        await window.puter.showSaveFilePicker(data, name);
+                      window.project.name = name;
+                      window.autosaveEnabled = false;
                     }
                   }}
                 />
@@ -316,11 +136,11 @@ export default observer(({ store }) => {
                     // const dataURL = await store.toDataURL();
                     // const blob = dataURLtoBlob(dataURL);
                     const data = JSON.stringify(store.toJSON());
-                    // If there is a file already open, overwrite it with the content of editor
-                    openFile.current = await window.puter.showSaveFilePicker(
-                      data,
-                      'polotno.json'
-                    );
+                    const name = 'polotno.json';
+                    window.project.storeFile =
+                      await window.puter.showSaveFilePicker(data, name);
+                    window.project.name = name;
+                    window.autosaveEnabled = false;
                   }}
                 />
                 <MenuItem

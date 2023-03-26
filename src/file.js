@@ -53,3 +53,21 @@ export const loadFile = (file, store) => {
     loadJSONFile(file, store);
   }
 };
+
+let storeFile = null;
+export function setStoreFile(file) {
+  storeFile = file;
+}
+
+export function getStoreFile() {
+  return storeFile;
+}
+
+let previewFile = null;
+export function setPreviewFile(file) {
+  previewFile = file;
+}
+
+export function getPreviewFile() {
+  return previewFile;
+}

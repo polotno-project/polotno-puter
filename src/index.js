@@ -6,8 +6,9 @@ import { createStore } from 'polotno/model/store';
 import './index.css';
 import App from './App';
 import './logger';
+import { createProject } from './project';
 
-if (window.location.host !== 'studio.polotno.com') {
+if (window.location.host !== 'polotno-puter.netlify.app') {
   console.log(
     `%cWelcome to Polotno Studio! Thanks for your interest in the project!
 This repository has many customizations from the default version Polotno SDK.
@@ -22,6 +23,9 @@ But feel free to use this repository as a reference for your own project and to 
 const store = createStore({ key: 'nFA5H9elEytDyPyvKL7T' });
 window.store = store;
 store.addPage();
+
+const project = createProject({ store });
+window.project = project;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

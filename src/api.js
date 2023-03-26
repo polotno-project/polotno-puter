@@ -49,4 +49,5 @@ export async function saveDesign({ json, preview }) {
   const list = listFile ? await listFile.json() : [];
   list.push({ id, previewURL: previewFile.readURL });
   await listFile.write(JSON.stringify(list));
+  return { storeFile, previewFile };
 }

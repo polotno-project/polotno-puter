@@ -131,17 +131,34 @@ export const MyDesignsPanel = observer(({ store }) => {
 
   return (
     <div style={{ height: '100%' }}>
-      <button
+      <Button
+        fill
         onClick={async () => {
-          api.saveDesign({
+          const ids = store.pages
+            .map((page) => page.children.map((child) => child.id))
+            .flat();
+          const hasObjects = ids?.length;
+          if (hasObjects) {
+            if (!window.confirm('Remove all content for a new design?')) {
+              return;
+            }
+          }
+          const pagesIds = store.pages.map((p) => p.id);
+          store.deletePages(pagesIds);
+          store.addPage();
+          const { storeFile, previewFile, id } = await api.saveDesign({
             name: 'New design',
             json: store.toJSON(),
             preview: await store.toDataURL({ pixelRatio: 0.3 }),
           });
+          window.project.storeFile = storeFile;
+          window.project.previewFile = previewFile;
+          window.project.id = id;
+          window.project.autosaveEnabled = true;
         }}
       >
-        Add new
-      </button>
+        Create new design
+      </Button>
       {designsLoadings && <div>Loading...</div>}
       {!designsLoadings && !designs.length && <div>No designs yet</div>}
       {designsLoadings && (
