@@ -106,6 +106,7 @@ export default observer(({ store }) => {
                   onClick={async () => {
                     const file = await window.puter.showOpenFilePicker();
                     window.project.openFile(file);
+                    window.project.id = '';
                   }}
                 />
                 <MenuItem

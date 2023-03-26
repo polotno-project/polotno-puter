@@ -57,7 +57,7 @@ class Project {
   async openFile(file, autosaveEnabled = false) {
     this.storeFile = file;
     this.name = this.storeFile.name;
-    this.autosaveEnabled = false;
+    this.autosaveEnabled = autosaveEnabled;
     if (this.storeFile.name.indexOf('.json') >= 0) {
       const file = this.storeFile;
       const text = await file.text();

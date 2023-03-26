@@ -19,6 +19,8 @@ const DesignCard = observer(({ design, store, onDelete }) => {
   const handleSelect = async () => {
     setLoading(true);
     const json = await api.loadById({ id: design.id });
+    window.project.id = design.id;
+    window.project.autosaveEnabled = true;
     store.loadJSON(json);
     store.openSidePanel('photos');
     setLoading(false);
