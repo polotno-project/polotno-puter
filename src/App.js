@@ -12,7 +12,7 @@ import { QuotesSection } from './sections/quotes-section';
 import { IconsSection } from './sections/icons-section';
 import { ShapesSection } from './sections/shapes-section';
 import { StableDiffusionSection } from './sections/stable-diffusion-section';
-// import { MyDesignsSection } from './sections/my-designs-section';
+import { MyDesignsSection } from './sections/my-designs-section';
 
 import { ImageRemoveBackground } from './background-remover';
 
@@ -26,7 +26,7 @@ DEFAULT_SECTIONS.splice(3, 1, ShapesSection);
 DEFAULT_SECTIONS.splice(3, 0, IconsSection);
 // add two more sections
 DEFAULT_SECTIONS.push(QuotesSection, QrSection);
-// DEFAULT_SECTIONS.unshift(MyDesignsSection);
+DEFAULT_SECTIONS.unshift(MyDesignsSection);
 
 DEFAULT_SECTIONS.push(StableDiffusionSection);
 
