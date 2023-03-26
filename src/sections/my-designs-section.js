@@ -149,6 +149,7 @@ export const MyDesignsPanel = observer(({ store }) => {
           const pagesIds = store.pages.map((p) => p.id);
           store.deletePages(pagesIds);
           store.addPage();
+          window.project.name = 'Untitled Design';
           window.project.id = '';
           window.project.autosaveEnabled = true;
           store.openSidePanel('photos');
