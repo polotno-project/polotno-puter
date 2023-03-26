@@ -31,11 +31,11 @@ export async function loadById({ id }) {
 
 export async function saveDesign({ json, preview }) {
   const id = nanoid(10);
-  const storeFile = await window.puter.writeAppDataFile(
+  const storeFile = await window.puter.saveToAppData(
     id + '.json',
     JSON.stringify(json)
   );
-  const previewFile = await window.puter.writeAppDataFile(
+  const previewFile = await window.puter.saveToAppData(
     id + '.png',
     dataURLtoBlob(preview)
   );
