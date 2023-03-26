@@ -31,8 +31,7 @@ export async function loadById({ id }) {
   return await storeFile.json();
 }
 
-export async function saveDesign({ json, preview }) {
-  const id = nanoid(10);
+export async function saveDesign({ json, preview, name, id = nanoid(10) }) {
   const storeFile = await window.puter.saveToAppData(
     id + '.json',
     JSON.stringify(json)
@@ -47,7 +46,14 @@ export async function saveDesign({ json, preview }) {
     listFile = await window.puter.saveToAppData(LIST_FILE_NAME, '[]');
   }
   const list = listFile ? await listFile.json() : [];
-  list.push({ id, previewURL: previewFile.readURL });
+  const existing = list.find((design) => design.id === id);
+  if (existing) {
+    existing.previewURL = previewFile.readURL;
+    existing.name = name;
+  } else {
+    list.push({ id, previewURL: previewFile.readURL, name });
+  }
   await listFile.write(JSON.stringify(list));
-  return { storeFile, previewFile };
+
+  return { storeFile, previewFile, id };
 }

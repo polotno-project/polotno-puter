@@ -146,15 +146,10 @@ export const MyDesignsPanel = observer(({ store }) => {
           const pagesIds = store.pages.map((p) => p.id);
           store.deletePages(pagesIds);
           store.addPage();
-          const { storeFile, previewFile, id } = await api.saveDesign({
-            name: 'New design',
-            json: store.toJSON(),
-            preview: await store.toDataURL({ pixelRatio: 0.3 }),
-          });
-          window.project.storeFile = storeFile;
-          window.project.previewFile = previewFile;
-          window.project.id = id;
+          window.project.id = '';
           window.project.autosaveEnabled = true;
+          await window.project.save();
+          store.openSidePanel('photos');
         }}
       >
         Create new design

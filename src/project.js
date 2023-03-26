@@ -21,7 +21,7 @@ const addImage = async (file, store) => {
 
 class Project {
   id = '';
-  name = '';
+  name = 'Untitled Design';
   skipSaving = false;
   status = 'saved';
   storeFile = null;
@@ -40,10 +40,12 @@ class Project {
     });
 
     mobx.reaction(
-      () => this.name + this.status,
+      () => this.name + this.status + this.id,
       () => {
         const prefix = this.status === 'saved' ? '' : '● ';
-        window.puter.setWindowTitle(prefix + this.name);
+        window.puter.setWindowTitle(
+          prefix + this.name + ' ' + (this.id || '') + ' - Polotno Studio'
+        );
       }
     );
 
@@ -81,21 +83,21 @@ class Project {
   }
 
   async save() {
-    if (!this.storeFile) {
-      return;
-    }
     const json = this.store.toJSON();
     const maxWidth = 400;
     const preview = await this.store.toDataURL({
       pixelRatio: maxWidth / json.width,
       mimeType: 'image/jpeg',
     });
-    const res = await api.saveDesign({
-      store: json,
+    const { storeFile, previewFile, id } = await api.saveDesign({
       id: this.id,
       name: this.name,
+      json: this.store.toJSON(),
       preview,
     });
+    this.storeFile = storeFile;
+    this.previewFile = previewFile;
+    this.id = id;
     this.status = 'saved';
   }
 }
