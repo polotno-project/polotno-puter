@@ -24,12 +24,15 @@ class Project {
   name = '';
   skipSaving = false;
   status = 'saved';
-  storeFile = mobx.observable.ref(null);
-  previewFile = mobx.observable.ref(null);
+  storeFile = null;
+  previewFile = null;
   autosaveEnabled = true;
 
   constructor({ store }) {
-    mobx.makeAutoObservable(this);
+    mobx.makeAutoObservable(this, {
+      storeFile: mobx.observable.ref,
+      previewFile: mobx.observable.ref,
+    });
     this.store = store;
 
     store.on('change', () => {
@@ -63,6 +66,7 @@ class Project {
   }
 
   requestSave() {
+    this.status = 'unsaved';
     if (this.saveTimeout) {
       return;
     }
@@ -92,6 +96,7 @@ class Project {
       name: this.name,
       preview,
     });
+    this.status = 'saved';
   }
 }
 
