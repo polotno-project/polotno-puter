@@ -109,7 +109,7 @@ export const MyDesignsPanel = observer(({ store }) => {
     setDesignsLoading(false);
   };
 
-  const handleProjectDelete = (id) => {
+  const handleProjectDelete = ({ id }) => {
     setDesigns(designs.filter((design) => design.id !== id));
     api.deleteDesign({ id });
   };
