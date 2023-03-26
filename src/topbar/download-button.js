@@ -169,6 +169,9 @@ export const DownloadButton = observer(({ store }) => {
         text={t('toolbar.download')}
         intent="primary"
         loading={saving}
+        style={{
+          minHeight: '26px',
+        }}
         onClick={() => {
           setQuality(1);
         }}

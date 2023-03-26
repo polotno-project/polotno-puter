@@ -361,6 +361,16 @@ export default observer(({ store }) => {
           >
             Save As
           </Button> */}
+          <Button
+            text="My Designs"
+            intent="primary"
+            style={{
+              minHeight: '26px',
+            }}
+            onClick={() => {
+              store.openSidePanel('my-designs');
+            }}
+          />
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
           {/* <a
