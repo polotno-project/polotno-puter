@@ -32,7 +32,7 @@ const NounContainer = styled('div')`
   height: 100%;
   overflow: hidden;
 
-  & img {
+  .bp4-dark & img {
     filter: invert(1);
   }
 `;
