@@ -1,8 +1,10 @@
 import { nanoid } from 'nanoid';
 import { dataURLtoBlob } from './blob';
 
+const LIST_FILE_NAME = 'designs-list.json';
+
 export async function listDesigns() {
-  const listFile = await window.puter.readAppDataFile('designs-list.json');
+  const listFile = await window.puter.readAppDataFile(LIST_FILE_NAME);
   if (!listFile) {
     return [];
   }
@@ -11,7 +13,7 @@ export async function listDesigns() {
 }
 
 export async function deleteDesign({ id }) {
-  const listFile = await window.puter.readAppDataFile('designs-list.json');
+  const listFile = await window.puter.readAppDataFile(LIST_FILE_NAME);
   if (!listFile) {
     return [];
   }
@@ -40,7 +42,10 @@ export async function saveDesign({ json, preview }) {
     dataURLtoBlob(preview)
   );
 
-  const listFile = await window.puter.readAppDataFile('designs-list.json');
+  let listFile = await window.puter.readAppDataFile(LIST_FILE_NAME);
+  if (!listFile) {
+    listFile = await window.puter.saveToAppData(LIST_FILE_NAME, '[]');
+  }
   const list = listFile ? await listFile.json() : [];
   list.push({ id, previewURL: previewFile.readURL });
   await listFile.write(JSON.stringify(list));
