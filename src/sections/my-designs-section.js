@@ -83,7 +83,7 @@ const DesignCard = observer(({ design, store, onDelete }) => {
                 text="Delete"
                 onClick={() => {
                   if (window.confirm('Are you sure you want to delete it?')) {
-                    onDelete(design.design_id);
+                    onDelete({ id: design.id });
                   }
                 }}
               />
