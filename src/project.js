@@ -79,7 +79,7 @@ class Project {
       this.saveTimeout = null;
       // skip autosave if no project opened
       this.save();
-    }, 5000);
+    }, 2000);
   }
 
   async save() {

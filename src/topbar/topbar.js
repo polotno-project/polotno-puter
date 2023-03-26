@@ -12,6 +12,7 @@ import {
   Menu,
   MenuItem,
   MenuDivider,
+  EditableText,
 } from '@blueprintjs/core';
 import FaGithub from '@meronex/icons/fa/FaGithub';
 import FaDiscord from '@meronex/icons/fa/FaDiscord';
@@ -77,7 +78,7 @@ export default observer(({ store }) => {
                 <MenuItem
                   icon="document"
                   text="New"
-                  onClick={() => {
+                  onClick={async () => {
                     const ids = store.pages
                       .map((page) => page.children.map((child) => child.id))
                       .flat();
@@ -92,7 +93,9 @@ export default observer(({ store }) => {
                     const pagesIds = store.pages.map((p) => p.id);
                     store.deletePages(pagesIds);
                     store.addPage();
-                    window.project.storeFile = null;
+                    window.project.id = '';
+                    window.project.autosaveEnabled = true;
+                    await window.project.save();
                   }}
                 />
 
@@ -191,6 +194,21 @@ export default observer(({ store }) => {
               store.openSidePanel('my-designs');
             }}
           />
+          <div
+            style={{
+              paddingRight: '10px',
+              maxWidth: '200px',
+            }}
+          >
+            <EditableText
+              value={window.project.name}
+              placeholder="Design name"
+              onChange={(name) => {
+                window.project.name = name;
+                window.project.requestSave();
+              }}
+            />
+          </div>
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
           {/* <a
