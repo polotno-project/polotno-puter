@@ -18,7 +18,7 @@ const DesignCard = observer(({ design, store, onDelete }) => {
   const [loading, setLoading] = React.useState(false);
   const handleSelect = async () => {
     setLoading(true);
-    const json = await api.loadById(design.id);
+    const json = await api.loadById({ id: design.id });
     store.loadJSON(json);
     store.openSidePanel('photos');
     setLoading(false);
