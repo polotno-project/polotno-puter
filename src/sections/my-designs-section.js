@@ -149,30 +149,28 @@ export const MyDesignsPanel = observer(({ store }) => {
           <Spinner />
         </div>
       )}
-      {!designs && (
-        <div style={{ display: 'flex', paddingTop: '5px' }}>
-          <div style={{ width: '50%' }}>
-            {half1.map((design) => (
-              <DesignCard
-                design={design}
-                key={design.id}
-                store={store}
-                onDelete={handleProjectDelete}
-              />
-            ))}
-          </div>
-          <div style={{ width: '50%' }}>
-            {half2.map((design) => (
-              <DesignCard
-                design={design}
-                key={design.id}
-                store={store}
-                onDelete={handleProjectDelete}
-              />
-            ))}
-          </div>
+      <div style={{ display: 'flex', paddingTop: '5px' }}>
+        <div style={{ width: '50%' }}>
+          {half1.map((design) => (
+            <DesignCard
+              design={design}
+              key={design.id}
+              store={store}
+              onDelete={handleProjectDelete}
+            />
+          ))}
         </div>
-      )}
+        <div style={{ width: '50%' }}>
+          {half2.map((design) => (
+            <DesignCard
+              design={design}
+              key={design.id}
+              store={store}
+              onDelete={handleProjectDelete}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 });
