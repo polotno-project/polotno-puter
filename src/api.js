@@ -31,7 +31,10 @@ export async function loadById({ id }) {
   return await storeFile.json();
 }
 
-export async function saveDesign({ json, preview, name, id = nanoid(10) }) {
+export async function saveDesign({ json, preview, name, id }) {
+  if (!id) {
+    id = nanoid(10);
+  }
   const storeFile = await window.puter.saveToAppData(
     id + '.json',
     JSON.stringify(json)
