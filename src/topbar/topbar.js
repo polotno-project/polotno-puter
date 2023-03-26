@@ -196,7 +196,7 @@ export default observer(({ store }) => {
           />
           <div
             style={{
-              paddingRight: '10px',
+              paddingLeft: '50px',
               maxWidth: '200px',
             }}
           >
