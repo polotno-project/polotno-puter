@@ -151,8 +151,8 @@ export const MyDesignsPanel = observer(({ store }) => {
           store.addPage();
           window.project.id = '';
           window.project.autosaveEnabled = true;
-          await window.project.save();
           store.openSidePanel('photos');
+          await window.project.save();
         }}
       >
         Create new design
