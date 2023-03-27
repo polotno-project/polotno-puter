@@ -131,6 +131,7 @@ export default observer(({ store }) => {
                       window.project.name = name;
                       window.autosaveEnabled = false;
                     }
+                    window.project.status = 'saved';
                   }}
                 />
                 <MenuItem
@@ -145,6 +146,7 @@ export default observer(({ store }) => {
                       await window.puter.showSaveFilePicker(data, name);
                     window.project.name = name;
                     window.autosaveEnabled = false;
+                    window.project.status = 'saved';
                   }}
                 />
                 <MenuItem
