@@ -139,18 +139,22 @@ export const MyDesignsPanel = observer(({ store }) => {
       <Button
         fill
         onClick={async () => {
-          const ids = store.pages
-            .map((page) => page.children.map((child) => child.id))
-            .flat();
-          const hasObjects = ids?.length;
-          if (hasObjects) {
-            if (!window.confirm('Remove all content for a new design?')) {
-              return;
+          if (window.project.status !== 'saved') {
+            const ids = store.pages
+              .map((page) => page.children.map((child) => child.id))
+              .flat();
+            const hasObjects = ids?.length;
+            if (hasObjects) {
+              if (!window.confirm('Remove all content for a new design?')) {
+                return;
+              }
             }
           }
+          window.project.skipSaving = true;
           const pagesIds = store.pages.map((p) => p.id);
           store.deletePages(pagesIds);
           store.addPage();
+          window.project.skipSaving = false;
           window.project.name = 'Untitled Design';
           window.project.id = '';
           window.project.autosaveEnabled = true;
