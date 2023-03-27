@@ -45,8 +45,9 @@ class Project {
       () => this.name + this.status + this.id,
       () => {
         const prefix = this.status === 'saved' ? '' : '● ';
+        const id = this.id ? ` [${this.id}]` : '';
         window.puter.setWindowTitle(
-          prefix + this.name + ' ' + (this.id || '') + ' - Polotno Studio'
+          prefix + this.name + ' ' + id + ' - Polotno Studio'
         );
       }
     );
