@@ -31,18 +31,23 @@ export async function loadById({ id }) {
   return await storeFile.json();
 }
 
+async function writeFile(fileName, data) {
+  let file = await window.puter.readAppDataFile(fileName);
+  if (!file) {
+    file = await window.puter.saveToAppData(fileName, '');
+  }
+  await file.write(data);
+  return file;
+}
+
 export async function saveDesign({ json, preview, name, id }) {
   if (!id) {
     id = nanoid(10);
   }
-  const storeFile = await window.puter.saveToAppData(
-    id + '.json',
-    JSON.stringify(json)
-  );
-  const previewFile = await window.puter.saveToAppData(
-    id + '.png',
-    dataURLtoBlob(preview)
-  );
+  const jsonFileName = id + '.json';
+  const storeFile = await writeFile(jsonFileName, JSON.stringify(json));
+
+  const previewFile = await writeFile(id + '.png', dataURLtoBlob(preview));
 
   let listFile = await window.puter.readAppDataFile(LIST_FILE_NAME);
   if (!listFile) {
