@@ -36,7 +36,9 @@ class Project {
     this.store = store;
 
     store.on('change', () => {
-      this.requestSave();
+      if (!this.skipSaving) {
+        this.requestSave();
+      }
     });
 
     mobx.reaction(

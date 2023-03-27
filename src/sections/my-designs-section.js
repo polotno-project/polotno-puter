@@ -22,7 +22,9 @@ const DesignCard = observer(({ design, store, onDelete }) => {
     window.project.autosaveEnabled = true;
     window.project.name = design.name;
     const json = await api.loadById({ id: design.id });
+    window.project.skipSaving = true;
     store.loadJSON(json);
+    window.project.skipSaving = false;
     store.openSidePanel('photos');
     setLoading(false);
   };
