@@ -20,7 +20,7 @@ const GenerateTab = observer(({ store }) => {
   const inputRef = React.useRef(null);
   const [image, setImage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
-  const { credits, consumeCredits } = useCredits('stableDiffusionCredits', 10);
+  const { credits, consumeCredits } = useCredits('stableDiffusionCredits', 15);
 
   const handleGenerate = async () => {
     if (credits <= 0) {

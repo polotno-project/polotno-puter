@@ -31,7 +31,7 @@ export const RemoveBackgroundDialog = observer(
     const [src, setSrc] = React.useState(element.src);
     const { credits, consumeCredits } = useCredits(
       'removeBackgroundCredits',
-      5
+      10
     );
 
     React.useEffect(() => {
