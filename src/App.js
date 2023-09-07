@@ -4,6 +4,7 @@ import { Toolbar } from 'polotno/toolbar/toolbar';
 import { ZoomButtons } from 'polotno/toolbar/zoom-buttons';
 import { SidePanel, DEFAULT_SECTIONS } from 'polotno/side-panel';
 import { Workspace } from 'polotno/canvas/workspace';
+import { Tooltip } from 'polotno/canvas/tooltip';
 
 import { loadFile } from './file';
 import { QrSection } from './sections/qr-section';
@@ -81,7 +82,7 @@ const App = ({ store }) => {
                 ImageRemoveBackground,
               }}
             />
-            <Workspace store={store} />
+            <Workspace store={store} components={{ Tooltip }} />
             <ZoomButtons store={store} />
           </WorkspaceWrap>
         </PolotnoContainer>
