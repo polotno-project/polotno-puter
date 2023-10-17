@@ -34,7 +34,6 @@ const NavbarContainer = styled('div')`
   &.bp5-navbar,
   & .bp5-navbar-group {
     height: 32px;
-    background-color: #fbf9f9;
   }
   & .bp5-button {
     padding: 2px 10px;
