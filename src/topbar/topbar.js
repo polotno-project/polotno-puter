@@ -31,12 +31,12 @@ const NavbarContainer = styled('div')`
     overflow-y: hidden;
     max-width: 100vw;
   }
-  &.bp4-navbar,
-  & .bp4-navbar-group {
+  &.bp5-navbar,
+  & .bp5-navbar-group {
     height: 32px;
     background-color: #fbf9f9;
   }
-  & .bp4-button {
+  & .bp5-button {
     padding: 2px 10px;
   }
 `;
@@ -68,7 +68,7 @@ export default observer(({ store }) => {
   };
 
   return (
-    <NavbarContainer className="bp4-navbar">
+    <NavbarContainer className="bp5-navbar">
       <NavInner>
         <Navbar.Group align={Alignment.LEFT}>
           <Popover2
@@ -237,7 +237,7 @@ export default observer(({ store }) => {
             href="https://polotno.com"
             target="_blank"
             icon={
-              <BiCodeBlock className="bp4-icon" style={{ fontSize: '20px' }} />
+              <BiCodeBlock className="bp5-icon" style={{ fontSize: '20px' }} />
             }
           >
             API
@@ -247,7 +247,7 @@ export default observer(({ store }) => {
             href="https://github.com/lavrton/polotno-studio"
             target="_blank"
             icon={
-              <FaGithub className="bp4-icon" style={{ fontSize: '20px' }} />
+              <FaGithub className="bp5-icon" style={{ fontSize: '20px' }} />
             }
           >
             Github
@@ -257,7 +257,7 @@ export default observer(({ store }) => {
             href="https://discord.gg/W2VeKgsr9J"
             target="_blank"
             icon={
-              <FaDiscord className="bp4-icon" style={{ fontSize: '20px' }} />
+              <FaDiscord className="bp5-icon" style={{ fontSize: '20px' }} />
             }
           >
             Join Chat

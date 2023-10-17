@@ -27,8 +27,8 @@ export const DownloadButton = observer(({ store }) => {
     <Popover2
       content={
         <Menu>
-          <li class="bp4-menu-header">
-            <h6 class="bp4-heading">File type</h6>
+          <li class="bp5-menu-header">
+            <h6 class="bp5-heading">File type</h6>
           </li>
           <HTMLSelect
             fill
@@ -46,8 +46,8 @@ export const DownloadButton = observer(({ store }) => {
 
           {type !== 'html' && (
             <>
-              <li class="bp4-menu-header">
-                <h6 class="bp4-heading">Size</h6>
+              <li class="bp5-menu-header">
+                <h6 class="bp5-heading">Size</h6>
               </li>
               <div style={{ padding: '10px' }}>
                 <Slider
