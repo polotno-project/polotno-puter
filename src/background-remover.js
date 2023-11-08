@@ -8,7 +8,7 @@ import { useCredits } from './credits';
 
 let removeBackgroundFunc = async (url) => {
   const req = await fetch(
-    'https://api.polotno.com/api/remove-image-background-hotpot?KEY=' +
+    'https://api.polotno.com/api/remove-image-background-replicate?KEY=' +
       getKey(),
     {
       method: 'POST',
