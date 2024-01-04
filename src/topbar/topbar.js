@@ -13,12 +13,12 @@ import {
   MenuItem,
   MenuDivider,
   EditableText,
+  Popover,
 } from '@blueprintjs/core';
 import FaGithub from '@meronex/icons/fa/FaGithub';
 import FaDiscord from '@meronex/icons/fa/FaDiscord';
 import BiCodeBlock from '@meronex/icons/bi/BiCodeBlock';
 import { getImageSize } from 'polotno/utils/image';
-import { Popover2 } from '@blueprintjs/popover2';
 import FaFileImport from '@meronex/icons/fa/FaFileImport';
 import { DownloadButton } from './download-button';
 import { dataURLtoBlob, blobToDataURL } from '../blob';
@@ -70,7 +70,7 @@ export default observer(({ store }) => {
     <NavbarContainer className="bp5-navbar">
       <NavInner>
         <Navbar.Group align={Alignment.LEFT}>
-          <Popover2
+          <Popover
             content={
               <Menu>
                 {/* <MenuDivider title={t('toolbar.layering')} /> */}
@@ -171,7 +171,7 @@ export default observer(({ store }) => {
             minimal
           >
             <Button minimal text="File" />
-          </Popover2>
+          </Popover>
           {/* <Button
             icon="floppy-disk"
             minimal
