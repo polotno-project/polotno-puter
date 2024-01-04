@@ -40,12 +40,11 @@ const NounContainer = styled('div')`
 export const NounprojectPanel = observer(({ store, query }) => {
   // load data
   const { data, isLoading, loadMore, setQuery } = useInfiniteAPI({
+    defaultQuery: query,
     getAPI: ({ page, query }) =>
-      `${API}/get-nounproject?query=${query}&offset=${
-        (page - 1) * limit
-      }&KEY=${getKey()}`,
+      `${API}/get-nounproject?query=${query}&page=${page}&limit=${limit}&KEY=${getKey()}`,
     getSize: (res) => {
-      return 1;
+      return res.pagesNumber;
     },
   });
 
